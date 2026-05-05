@@ -1,0 +1,21 @@
+name: Terraform Lint Check
+
+on: [push] # Code push လုပ်တိုင်း အလုပ်လုပ်မည်
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest # GitHub ၏ cloud server ပေါ်တွင် run မည်
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4 # Repository ထဲမှ code များကို ဆွဲယူခြင်း
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.14.8" # သင်လက်ရှိသုံးနေသော version
+
+      - name: Terraform Init
+        run: terraform init # လိုအပ်သော provider များ install လုပ်ခြင်း
+
+      - name: Terraform Validate
+        run: terraform validate # Code syntax မှန်၊ မမှန် စစ်ဆေးခြင်း
